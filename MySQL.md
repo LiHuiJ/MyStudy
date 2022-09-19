@@ -86,3 +86,34 @@ alter event e_create ON COMPLETION PRESERVE ENABLE;
 alter event e_create ON COMPLETION PRESERVE DISABLE;
 ```
 
+# sql数据库查询时间语句天、周、月、年
+
+```sql
+#查询最近几天的时间数据
+SELECT * FROM 表名 WHERE DATE_SUB(CURDATE(),INTERVAL 4 DAY) <= DATE(时间字段)
+ 
+#查询昨天的数据
+SELECT * FROM 表名 WHERE TO_DAYS(NOW()) - TO_DAYS(时间字段) <= 1
+ 
+#查询一周时间的数据
+SELECT * FROM 表名 WHERE 时间字段 BETWEEN CURRENT_DATE() -7 AND SYSDATE()
+ 
+#查询最近一个月的数据
+SELECT * FROM 表名 WHERE DATE_SUB(CURDATE(),INTERVAL 1 MONTH) <= DATE(时间字段)
+ 
+#查询本月的数据
+SELECT * FROM 表名 WHERE DATE_FORMAT(时间字段,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+ 
+#查询最近一年的数据
+SELECT * FROM 表名 WHERE DATE_SUB(CURDATE(),INTERVAL 1 YEAR) <= DATE(时间字段)
+ 
+#查询某一年的数据
+SELECT * FROM 表名 WHERE DATE_FORMAT(时间字段,'%Y') = '2020' 
+ 
+#查询某一年某一月的数据
+SELECT * FROM 表名 WHERE DATE_FORMAT(时间字段,'%Y-%m') = '2020-09'
+ 
+#查询某一年某一月某一天的数据
+SELECT * FROM 表名 WHERE (DATEDIFF(时间字段,'2020-09-19') = 0)
+```
+
